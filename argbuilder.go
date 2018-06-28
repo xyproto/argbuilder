@@ -4,9 +4,9 @@ package argbuilder
 import (
 	"bytes"
 	"fmt"
-	"strings"
-	"os/exec"
 	"os"
+	"os/exec"
+	"strings"
 )
 
 type ArgBuilder struct {
@@ -43,7 +43,6 @@ func (ab *ArgBuilder) TrimAdd(arg string) {
 	}
 }
 
-
 func (ab *ArgBuilder) Run() error {
 	var cmd *exec.Cmd
 	cmd = exec.Command(ab.args[0], ab.args[1:]...)
@@ -68,8 +67,8 @@ func (ab *ArgBuilder) Output2() (string, error) {
 
 // Output executes a command and returns the combined output
 func (ab *ArgBuilder) Output() string {
-	 output, err := ab.Output2()
-	 if err != nil {
+	output, err := ab.Output2()
+	if err != nil {
 		return ""
 	}
 	return output
@@ -82,4 +81,18 @@ func (ab *ArgBuilder) TrimOutput() string {
 		return ""
 	}
 	return strings.TrimSpace(output)
+}
+
+// AddStrings adds a slice of strings as arguments
+func (ab *ArgBuilder) AddStrings(args []string) {
+	for _, val := range args {
+		ab.args = append(ab.args, val)
+	}
+}
+
+// AddValues adds a map of strings as arguments
+func (ab *ArgBuilder) AddValues(args map[string]string) {
+	for _, val := range args {
+		ab.args = append(ab.args, val)
+	}
 }
